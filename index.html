@@ -7,9 +7,9 @@
   </head>
   <body>
     <h2>Reset Password</h2>
-    <p>Follow this link to reset your password:</p>
+    <p>If your app doesn’t open automatically, click the link below:</p>
     <p>
-      <a id="reset-link" href="#">Reset Password</a>
+      <a id="reset-link" href="#">Open App</a>
     </p>
 
     <script>
@@ -18,9 +18,15 @@
       const token = params.get("token_hash");
       const type = params.get("type");
 
-      // Change link to your app deep link
+      // Construct deep link to your app
       const appLink = `timebank://auth/reset-password?token_hash=${token}&type=${type}`;
-      document.getElementById("reset-link").href = appLink;
+      const linkElement = document.getElementById("reset-link");
+      linkElement.href = appLink;
+
+      // Automatically redirect to the app
+      if (token && type) {
+        window.location.href = appLink;
+      }
     </script>
   </body>
 </html>
