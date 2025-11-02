@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reset Password</title>
+  </head>
+  <body>
+    <h2>Reset Password</h2>
+    <p>Follow this link to reset your password:</p>
+    <p>
+      <a id="reset-link" href="#">Reset Password</a>
+    </p>
+
+    <script>
+      // Grab token_hash and type from URL
+      const params = new URLSearchParams(window.location.search);
+      const token = params.get("token_hash");
+      const type = params.get("type");
+
+      // Change link to your app deep link
+      const appLink = `timebank://auth/reset-password?token_hash=${token}&type=${type}`;
+      document.getElementById("reset-link").href = appLink;
+    </script>
+  </body>
+</html>
