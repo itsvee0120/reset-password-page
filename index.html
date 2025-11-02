@@ -4,6 +4,30 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Reset Password</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        background: #041b0c;
+        color: #fff;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+      a {
+        color: #84d1a2;
+        text-decoration: none;
+        font-weight: bold;
+      }
+      #fallback {
+        margin-top: 20px;
+        background: rgba(2, 23, 9, 0.7);
+        padding: 10px;
+        border-radius: 8px;
+      }
+    </style>
   </head>
   <body>
     <h2>Reset Password</h2>
@@ -25,15 +49,16 @@
       const tokenSpan = document.getElementById("token");
 
       if (token && type) {
+        // Correct deep link for Expo Router
         const appLink = `timebank://auth/reset-password?token_hash=${token}&type=${type}`;
         linkElement.href = appLink;
 
-        // Attempt automatic redirect after short delay
+        // Try automatic redirect after short delay
         setTimeout(() => {
           window.location.href = appLink;
         }, 500);
 
-        // Show fallback token in case app doesn't open
+        // Show fallback token if automatic redirect fails
         tokenSpan.textContent = token;
         fallback.style.display = "block";
       } else {
