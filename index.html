@@ -8,24 +8,38 @@
   <body>
     <h2>Reset Password</h2>
     <p>If your app doesn’t open automatically, click the link below:</p>
-    <p>
-      <a id="reset-link" href="#">Open App</a>
+    <p><a id="reset-link" href="#">Open App</a></p>
+
+    <p id="fallback" style="display: none">
+      Can't open the app? Copy this token and open your app manually:
+      <span id="token"></span>
     </p>
 
     <script>
-      // Grab token_hash and type from URL
       const params = new URLSearchParams(window.location.search);
       const token = params.get("token_hash");
       const type = params.get("type");
 
-      // Construct deep link to your app
-      const appLink = `timebank://auth/reset-password?token_hash=${token}&type=${type}`;
       const linkElement = document.getElementById("reset-link");
-      linkElement.href = appLink;
+      const fallback = document.getElementById("fallback");
+      const tokenSpan = document.getElementById("token");
 
-      // Automatically redirect to the app
       if (token && type) {
-        window.location.href = appLink;
+        const appLink = `timebank://auth/reset-password?token_hash=${token}&type=${type}`;
+        linkElement.href = appLink;
+
+        // Attempt automatic redirect after short delay
+        setTimeout(() => {
+          window.location.href = appLink;
+        }, 500);
+
+        // Show fallback token in case app doesn't open
+        tokenSpan.textContent = token;
+        fallback.style.display = "block";
+      } else {
+        linkElement.style.display = "none";
+        fallback.textContent = "Invalid reset link.";
+        fallback.style.display = "block";
       }
     </script>
   </body>
