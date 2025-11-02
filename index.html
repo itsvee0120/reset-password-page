@@ -50,7 +50,8 @@
 
       if (token && type) {
         // Correct deep link for Expo Router
-        const appLink = `timebank://auth/reset-password?token_hash=${token}&type=${type}`;
+        const appLink = `timebank://reset_password?token_hash=${token}&type=${type}`;
+
         linkElement.href = appLink;
 
         // Try automatic redirect after short delay
